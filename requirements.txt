@@ -1,0 +1,9 @@
+streamlit
+ultralytics==8.2.103
+requests
+gdown
+opencv-python-headless
+torch
+numpy
+pandas
+Pillow
