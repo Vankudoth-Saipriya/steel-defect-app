@@ -24,6 +24,7 @@ if not GEMINI_API_KEY:
 import os, requests
 from ultralytics import YOLO
 import streamlit as st
+import gdown
 
 # --- YOLO Model Config ---
 MODEL_URL = "https://drive.google.com/uc?export=download&id=1cfxCAlr_33E8fJLo9T9WNYiCPCM8gg0L"
@@ -31,16 +32,15 @@ MODEL_PATH = "best.pt"
 
 @st.cache_resource(show_spinner=False)
 def load_yolo_model():
-    # Download model if not already present
+    """Download YOLOv8 model from Google Drive (once) and load."""
     if not os.path.exists(MODEL_PATH):
-        st.info("Downloading YOLOv8 model from Google Drive...")
-        r = requests.get(MODEL_URL, allow_redirects=True)
-        if r.status_code != 200:
-            st.error(f"Failed to download model. HTTP {r.status_code}")
+        st.info("Downloading YOLO model from Google Drive (this happens only once)...")
+        try:
+            gdown.download(f"https://drive.google.com/uc?id={MODEL_ID}", MODEL_PATH, quiet=False)
+        except Exception as e:
+            st.error(f"Model download failed: {e}")
             st.stop()
-        with open(MODEL_PATH, "wb") as f:
-            f.write(r.content)
-        st.success("✅ YOLO model downloaded successfully!")
+        st.success("✅ Model downloaded successfully!")
 
     return YOLO(MODEL_PATH)
 
@@ -248,5 +248,6 @@ if st.button(" Run Detection and Reasoning"):
             mime="text/html",
         )
         st.success("✅ Report generated successfully!")
+
 
 
