@@ -1,11 +1,12 @@
 # System packages for OpenCV
-opencv-python-headless==4.10.0.84
 
-streamlit==1.51.0
+opencv-python-headless==4.10.0.84
 ultralytics==8.2.103
-python-dotenv==1.0.1
 torch==2.9.0
 torchvision==0.24.0
+streamlit==1.51.0
 requests==2.32.3
+python-dotenv==1.0.1
 pillow==11.0.0
+fpdf==1.7.2
 
