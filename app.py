@@ -21,28 +21,36 @@ if not GEMINI_API_KEY:
     st.stop()
 
 # --- Load YOLO model ---
-import os, requests
-from ultralytics import YOLO
+import os
 import streamlit as st
+from ultralytics import YOLO
 import gdown
 
-# --- YOLO Model Config ---
-MODEL_URL = "https://drive.google.com/uc?export=download&id=1cfxCAlr_33E8fJLo9T9WNYiCPCM8gg0L"
+# ==========================================================
+# 🚀 YOLO Model Configuration
+# ==========================================================
+MODEL_ID = "1cfxCAlr_33E8fJLo9T9WNYiCPCM8gg0L"  # <-- Your Google Drive file ID
 MODEL_PATH = "best.pt"
 
 @st.cache_resource(show_spinner=False)
 def load_yolo_model():
-    """Download YOLOv8 model from Google Drive (once) and load."""
+    """Downloads YOLOv8 model from Google Drive (only if missing) and loads it."""
     if not os.path.exists(MODEL_PATH):
-        st.info("Downloading YOLO model from Google Drive (this happens only once)...")
+        st.info("⬇️ Downloading YOLOv8 model from Google Drive (first time only)...")
         try:
-            gdown.download(f"https://drive.google.com/uc?id={MODEL_ID}", MODEL_PATH, quiet=False)
+            url = f"https://drive.google.com/uc?id={MODEL_ID}"
+            gdown.download(url, MODEL_PATH, quiet=False)
+            st.success("✅ YOLO model downloaded successfully!")
         except Exception as e:
-            st.error(f"Model download failed: {e}")
+            st.error(f"❌ Model download failed: {e}")
             st.stop()
-        st.success("✅ Model downloaded successfully!")
 
-    return YOLO(MODEL_PATH)
+    try:
+        model = YOLO(MODEL_PATH)
+        return model
+    except Exception as e:
+        st.error(f"⚠️ Failed to load YOLO model: {e}")
+        st.stop()
 
 
 # --- Gemini API ---
@@ -248,6 +256,7 @@ if st.button(" Run Detection and Reasoning"):
             mime="text/html",
         )
         st.success("✅ Report generated successfully!")
+
 
 
 
