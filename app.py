@@ -196,8 +196,8 @@ function generatePDF(full) {
     return html
 
 # --- Streamlit UI ---
-st.set_page_config(page_title="Steel Defect Detector + Reasoning", layout="wide")
-st.title(" Steel Surface Defect Detection + Gemini Reasoning")
+st.set_page_config(page_title="Steel Defect Detector and Reasoning", layout="wide")
+st.title(" Steel Surface Defect Detection and Reasoning")
 
 uploaded_images = st.file_uploader("Upload one or more images", type=["jpg", "jpeg", "png"], accept_multiple_files=True)
 if st.button(" Run Detection and Reasoning"):
@@ -256,6 +256,7 @@ if st.button(" Run Detection and Reasoning"):
             mime="text/html",
         )
         st.success("✅ Report generated successfully!")
+
 
 
 
