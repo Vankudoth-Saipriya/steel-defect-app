@@ -26,7 +26,7 @@ from ultralytics import YOLO
 import streamlit as st
 
 # --- YOLO Model Config ---
-MODEL_URL = "https://drive.google.com/uc?id=1cfxCAlr_33E8fJLo9T9WNYiCPCM8gg0L"
+MODEL_URL = "https://drive.google.com/uc?export=download&id=1cfxCAlr_33E8fJLo9T9WNYiCPCM8gg0L"
 MODEL_PATH = "best.pt"
 
 @st.cache_resource(show_spinner=False)
@@ -248,4 +248,5 @@ if st.button(" Run Detection and Reasoning"):
             mime="text/html",
         )
         st.success("✅ Report generated successfully!")
+
 
